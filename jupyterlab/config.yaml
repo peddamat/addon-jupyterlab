@@ -16,9 +16,16 @@ map:
   - config:rw
   - share:rw
 options:
-  github_access_token: ""
+  github_access_token: ''
   system_packages: []
-  init_commands: []
+  init_commands:
+    - pip install hass_pyscript_kernel
+    - jupyter pyscript install
+    - echo "[homeassistant]" > /usr/local/share/jupyter/kernels/pyscript/pyscript.conf
+    # change this to your HA host's IP, see below
+    - echo "hass_host = coniferha.ha.home" >> /usr/local/share/jupyter/kernels/pyscript/pyscript.conf
+    - echo "hass_url = http://supervisor/core/" >> /usr/local/share/jupyter/kernels/pyscript/pyscript.conf
+    - echo "hass_token = $SUPERVISOR_TOKEN" >> /usr/local/share/jupyter/kernels/pyscript/pyscript.conf
 schema:
   log_level: list(trace|debug|info|notice|warning|error|fatal)?
   github_access_token: password
